@@ -246,4 +246,23 @@ export interface IQuestionDoc extends Document {
   updatedAt: string;
   _version: number;
   _id: ObjectId;
+  id: ObjectId;
+}
+
+export interface ISessionDoc extends Document {
+  role: string;  
+  experience: string;
+  topicsToFocus: string;
+  description: string;
+
+  // relationships
+  user: ObjectId | any;
+  questions: Array<ObjectId | any>;
+
+  // timestamps
+  createdAt: string;
+  updatedAt: string;
+  _version: number;
+  _id: ObjectId;
+  id: ObjectId;
 }
