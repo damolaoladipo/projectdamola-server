@@ -221,6 +221,7 @@ export interface IEmailRequest {
 }
 
 export interface IPrepPilotDoc extends Document {
+  prepPilotUserId: string;
   jobRole: string;
   level: string;
   experience: string;

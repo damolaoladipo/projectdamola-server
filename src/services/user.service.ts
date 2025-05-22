@@ -45,7 +45,8 @@ class UserService {
   public async validateRegister(data: RegisterUserDTO): Promise<IResult> {
     const allowedUsers = [
       UserType.ADMIN,
-      UserType.USER
+      UserType.USER,
+      UserType.PREPPILOT,
     ];
 
     let result: IResult = { error: false, message: "", code: 200, data: {} };
@@ -185,6 +186,11 @@ class UserService {
       }
 
       user = permissionUpdate.data as IUserDoc;
+    }
+
+    if (user.userType === UserType.PREPPILOT) {
+
+      
     }
 
     await this.encryptUserPassword(user, password);

@@ -4,6 +4,7 @@ import { DbModelsType } from "../../utils/enums.util";
 
 const PrepPilotSchema = new Schema<IPrepPilotDoc>(
   {
+    prepPilotUserId: { type: String, unique: true },
     jobRole: { type: String },
     level: { type: String },
     experience: { type: String },
