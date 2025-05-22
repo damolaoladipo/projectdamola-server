@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createSession } from "../../controller/prepPilot/session.controller";
+import { createSession } from "../../controllers/prepPilot/session.controller";
 
 
 const sessionRouter = Router({ mergeParams: true });

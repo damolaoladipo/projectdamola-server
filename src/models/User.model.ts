@@ -86,15 +86,7 @@ const UserSchema = new Schema<IUserDoc>(
     isDeactivated: { type: Boolean, default: false },
     loginLimit: { type: Number, default: 5 },
     lockedUntil: { type: Date },
-    twoFactorEnabled: { type: Boolean, default: false },
-
-    // Notification Preferences
-    notificationPreferences: {
-      email: { type: Boolean, default: true },
-      push: { type: Boolean, default: true },
-      sms: { type: Boolean, default: false },
-    },
-
+   
     // Relationships
     role: { type: Schema.Types.ObjectId, ref:DbModelsType.ROLE, index: true },
   },

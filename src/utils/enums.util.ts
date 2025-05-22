@@ -25,6 +25,8 @@ export enum DbModelsType {
   PERMISSION = "permission",
   API_KEY = "ApiKey",
   PLAN = "plan",
+  QUESTION = "question",
+  SESSION = "session",
   SUBSCRIPTION = "subscription",
   TRANSACTION = "transaction",
 }

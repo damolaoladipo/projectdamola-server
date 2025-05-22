@@ -230,3 +230,20 @@ export interface IEmailRequest {
   template?: string;
   attachments?: any[];
 }
+
+export interface IQuestionDoc extends Document {
+  question: string;
+  answer: string;
+  note: string;
+  isPinned: boolean;
+
+  // relationships
+  user: ObjectId | any;
+  session: ObjectId | any;
+
+  // timestamps
+  createdAt: string;
+  updatedAt: string;
+  _version: number;
+  _id: ObjectId;
+}
