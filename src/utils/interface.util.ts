@@ -1,5 +1,12 @@
 import { Document, ObjectId } from "mongoose";
-import { AppChannel, EmailType, OtpType, PasswordType, TransactionsType, UserType } from "./enums.util";
+import {
+  AppChannel,
+  EmailType,
+  OtpType,
+  PasswordType,
+  TransactionsType,
+  UserType,
+} from "./enums.util";
 
 export type Nullable<T> = T | null;
 export interface IRoleDoc extends Document {
@@ -17,7 +24,7 @@ export interface IRoleDoc extends Document {
   createdAt: string;
   updatedAt: string;
   _version: number;
-  _id: ObjectId; 
+  _id: ObjectId;
   id: ObjectId;
 }
 
@@ -38,14 +45,8 @@ export interface IUserDoc extends Document {
   lastName: string;
   email: string;
   password: string;
-  passwordType: PasswordType; // encrypt this data
+  passwordType: PasswordType;
   userType: UserType;
-
-  phoneNumber: string;
-  phoneCode: string;
-  country: string;
-  countryPhone: string;
-
   avatar: string;
   dateOfBirth: Date;
   gender: string;
@@ -84,7 +85,6 @@ export interface IUserDoc extends Document {
   id: ObjectId;
 }
 
-
 export interface IAdminDoc extends Document {
   firstName: string;
   lastName: string;
@@ -97,15 +97,15 @@ export interface IAdminDoc extends Document {
 export interface ILoginType {
   ip: string;
   deviceType: string;
-  platform: AppChannel
+  platform: AppChannel;
   deviceInfo?: {
-    manufacturer?: string; 
-    model?: string; 
-    osName?: string; 
+    manufacturer?: string;
+    model?: string;
+    osName?: string;
     osVersion: string;
-    browser?: string; 
+    browser?: string;
     browserVersion?: string;
-    appVersion?: string; 
+    appVersion?: string;
   };
   location?: {
     country: string;
@@ -161,7 +161,6 @@ export interface IOptions {
   password: string;
   user: string;
 }
-
 
 export interface ITransactionDoc extends Document {
   type: TransactionsType;
@@ -222,24 +221,6 @@ export interface IEmailRequest {
 }
 
 export interface IPrepPilotDoc extends Document {
- firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  passwordType: PasswordType; // encrypt this data
-  userType: UserType;
-
-  phoneNumber: string;
-  phoneCode: string;
-  country: string;
-  countryPhone: string;
-
-  avatar: string;
-  dateOfBirth: Date;
-  gender: string;
-  location: ILocationInfo;
-
-  //PrepPilot Specifics
   jobRole: string;
   level: string;
   experience: string;
@@ -277,7 +258,7 @@ export interface IQuestionDoc extends Document {
 }
 
 export interface ISessionDoc extends Document {
-  role: string;  
+  role: string;
   experience: string;
   topicsToFocus: string;
   description: string;

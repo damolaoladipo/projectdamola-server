@@ -32,11 +32,6 @@ const UserSchema = new Schema<IUserDoc>(
       type: String,
       enum: Object.values(UserType),
     },
-    phoneNumber: { type: String, unique: true, sparse: true, default: null },
-    phoneCode: { type: String, default: "+234" },
-    country: { type: String },
-    countryPhone: { type: String },
-
     avatar: { type: String },
     dateOfBirth: { type: Date },
     gender: { type: String },

@@ -8,6 +8,7 @@ const PrepPilotSchema = new Schema<IPrepPilotDoc>(
     level: { type: String },
     experience: { type: String },
     preference: [{ type: String }],
+    
 
     // relationships
     user: { type: Schema.Types.ObjectId, ref: DbModelsType.USER },
