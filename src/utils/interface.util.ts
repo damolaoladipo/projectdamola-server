@@ -41,7 +41,6 @@ export interface IUserDoc extends Document {
   passwordType: PasswordType; // encrypt this data
   userType: UserType;
 
-  //user: string;
   phoneNumber: string;
   phoneCode: string;
   country: string;
@@ -70,15 +69,6 @@ export interface IUserDoc extends Document {
   loginLimit: number;
   isLocked: boolean;
   lockedUntil: Nullable<Date>;
-  twoFactorEnabled: boolean;
-
-  // Notification Preferences
-  // deviceToken: IDeviceToken;
-  notificationPreferences: {
-    email: boolean;
-    push: boolean;
-    sms: boolean;
-  };
 
   // relationships
   role: ObjectId | any;
@@ -231,6 +221,43 @@ export interface IEmailRequest {
   attachments?: any[];
 }
 
+export interface IPrepPilotDoc extends Document {
+ firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  passwordType: PasswordType; // encrypt this data
+  userType: UserType;
+
+  phoneNumber: string;
+  phoneCode: string;
+  country: string;
+  countryPhone: string;
+
+  avatar: string;
+  dateOfBirth: Date;
+  gender: string;
+  location: ILocationInfo;
+
+  //PrepPilot Specifics
+  jobRole: string;
+  level: string;
+  experience: string;
+  preference: Array<string>;
+
+  // relationships
+  user: ObjectId | any;
+  session: ObjectId | any;
+  questions: Array<ObjectId | any>;
+  createdBy: ObjectId | any;
+
+  // time stamps
+  createdAt: Date;
+  updatedAt: Date;
+  _version: number;
+  _id: ObjectId;
+  id: ObjectId;
+}
 export interface IQuestionDoc extends Document {
   question: string;
   answer: string;
@@ -238,7 +265,7 @@ export interface IQuestionDoc extends Document {
   isPinned: boolean;
 
   // relationships
-  user: ObjectId | any;
+  preppilotProfile: ObjectId | any;
   session: ObjectId | any;
 
   // timestamps
@@ -256,7 +283,7 @@ export interface ISessionDoc extends Document {
   description: string;
 
   // relationships
-  user: ObjectId | any;
+  preppilotProfile: ObjectId | any;
   questions: Array<ObjectId | any>;
 
   // timestamps

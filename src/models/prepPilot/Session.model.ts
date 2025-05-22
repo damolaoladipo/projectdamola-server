@@ -11,7 +11,7 @@ const SessionSchema = new Schema<ISessionDoc>(
     description: { type: String },
 
     // relationships
-    user: { type: Schema.Types.ObjectId, ref: DbModelsType.USER },
+    preppilotProfile: { type: Schema.Types.ObjectId, ref: DbModelsType.PREPPILOT },
     questions: [{ type: Schema.Types.ObjectId, ref: DbModelsType.QUESTION }],
   },
   {

@@ -11,7 +11,7 @@ const QuestionSchema = new Schema<IQuestionDoc>(
     isPinned: { type: Boolean, default: false },
 
     // relationships
-    user: { type: Schema.Types.ObjectId, ref: DbModelsType.USER },
+    preppilotProfile: { type: Schema.Types.ObjectId, ref: DbModelsType.PREPPILOT },
   },
   {
     timestamps: true,
