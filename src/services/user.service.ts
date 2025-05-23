@@ -26,6 +26,7 @@ import { detectPlatform } from "../utils/helper.util";
 import { IPermissionDTO } from "../dtos/system.dto";
 import ErrorResponse from "../utils/error.util";
 import PermissionService from "./permission.service";
+import prepPilotService from "./prepPilot.service";
 
 class UserService {
   public result: IResult;
@@ -190,8 +191,17 @@ class UserService {
 
     if (user.userType === UserType.PREPPILOT) {
 
-      
+      const createUser = await prepPilotService.createPrepPilotProfile({
+        user: user,
+      })
+
+      if (createUser.error) {
+        throw new Error(createUser.message);
+      }
+
+      user 
     }
+    
 
     await this.encryptUserPassword(user, password);
     await user.save();
