@@ -220,6 +220,8 @@ export interface IEmailRequest {
   attachments?: any[];
 }
 
+
+// Preppilot related interfaces
 export interface IPrepPilotDoc extends Document {
   prepPilotUserId: string;
   jobRole: string;

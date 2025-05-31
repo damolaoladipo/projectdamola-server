@@ -7,7 +7,7 @@ export interface CreatePrepPilotDTO {
   level?: string;
   experience?: string;
   preference?: Array<string>;
-  user: IUserDoc;
   session?: ObjectId;
   questions?: Array<ObjectId>;
+  user: IUserDoc;
 }
