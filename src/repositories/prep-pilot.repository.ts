@@ -56,6 +56,28 @@ class PrepPilotRepository {
         return result;
     }
 
+    /**
+     * @name updateProfile
+     * * @description Update an existing PrepPilot profile
+     * @param id
+     * @param data
+     * @returns Updated PrepPilot profile
+     * */
+    public async updateProfile(id: ObjectId | string, data: Partial<CreatePrepPilotDTO>): Promise<IResult> {
+        let result: IResult = { error: false, message: "", code: 200, data: {} };
+
+        const updatedProfile = await this.model.findByIdAndUpdate
+        (id, data, { new: true });
+        if (!updatedProfile) {
+            result.error = true;
+            result.code = 404;
+            result.message = "PrepPilot profile not found";
+        }   else {
+            result.data = updatedProfile;
+        }
+
+        return result;
+    }
 }
 
 export default new PrepPilotRepository;

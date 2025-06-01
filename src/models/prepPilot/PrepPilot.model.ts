@@ -14,7 +14,7 @@ const PrepPilotSchema = new Schema<IPrepPilotDoc>(
     // relationships
     user: { type: Schema.Types.ObjectId, ref: DbModelsType.USER },
     questions: [{ type: Schema.Types.ObjectId, ref: DbModelsType.QUESTION }],
-    session: { type: Schema.Types.ObjectId, ref: DbModelsType.SESSION },
+    session: { type: String, ref: DbModelsType.SESSION },
     createdBy: { type: Schema.Types.ObjectId, ref: DbModelsType.USER },
   },
   {

@@ -228,11 +228,11 @@ export interface IPrepPilotDoc extends Document {
   level: string;
   experience: string;
   preference: Array<string>;
+  questions: Array<string>;
 
   // relationships
   user: ObjectId | any;
   session: ObjectId | any;
-  questions: Array<ObjectId | any>;
   createdBy: ObjectId | any;
 
   // time stamps

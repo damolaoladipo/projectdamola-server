@@ -22,6 +22,5 @@ export interface UpdatePrepPilotDTO {
   experience?: string;
   preference?: Array<string>;
   session?: ObjectId;
-  questions?: Array<ObjectId>;
-  user: IUserDoc;
+  questions?: Array<string>;
 }
