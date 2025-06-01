@@ -118,7 +118,7 @@ class EmailService {
       const message = {
         to: email,
         from: process.env.EMAIL_FROM_EMAIL as string,
-        subject: `You are invited to join ${initiativeName} on troott`,
+        subject: `You are invited to join ${initiativeName} on our application`,
         html: emailHtml,
       };
 
@@ -490,7 +490,7 @@ class EmailService {
       const message = {
         to: user.email,
         from: process.env.EMAIL_FROM_EMAIL as string,
-        subject: "Welcome to Your Troott Subscription!",
+        subject: "Welcome to Your App Subscription!",
         html: emailHtml,
       };
 
@@ -525,7 +525,7 @@ class EmailService {
       const message = {
         to: user.email,
         from: process.env.EMAIL_FROM_EMAIL as string,
-        subject: "Your Troott Trial Has Begun!",
+        subject: "Your Trial Has Begun!",
         html: emailHtml,
       };
 
@@ -595,7 +595,7 @@ class EmailService {
       const message = {
         to: user.email,
         from: process.env.EMAIL_FROM_EMAIL as string,
-        subject: "We Miss You at Troott!",
+        subject: "We Miss You!",
         html: emailHtml,
       };
 

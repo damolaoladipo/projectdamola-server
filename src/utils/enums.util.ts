@@ -17,14 +17,18 @@ export enum UserType {
   USER = "user",
   SUPERADMIN = "superadmin",
   ADMIN = "admin",
+  PREPPILOT = "preppilot-profile",
 }
 
 export enum DbModelsType {
   USER = "user",
   ROLE = "role",
   PERMISSION = "permission",
+  PREPPILOT = "preppilot-profile",
   API_KEY = "ApiKey",
   PLAN = "plan",
+  QUESTION = "question",
+  SESSION = "session",
   SUBSCRIPTION = "subscription",
   TRANSACTION = "transaction",
 }

@@ -24,7 +24,6 @@ import tokenService from "../services/token.service";
 import { IUserDoc } from "../utils/interface.util";
 import otpService from "../services/otp.service";
 
-
 /**
  * @name registerUser
  * @description Registers a new user
@@ -40,36 +39,32 @@ export const registerUser = asyncHandler(
     const validate = await userService.validateRegister(req.body);
     if (validate.error) {
       return next(
-        new ErrorResponse("Error", validate.code!, [validate.message])
+        new ErrorResponse(validate.message, validate.code!, [])
       );
     }
 
     const mailCheck = await userService.checkEmail(email);
     if (!mailCheck) {
       return next(
-        new ErrorResponse("Error", 400, ["a valid email is required"])
+        new ErrorResponse("a valid email is required", 400, [])
       );
     }
 
     const userExist = await User.findOne({ email: email.toLowerCase() });
     if (userExist) {
+      if (userExist.userType === UserType.SUPERADMIN) {
+        return next(
+          new ErrorResponse("forbidden!, user already exist", 400, [])
+        );
+      }
+
       return next(
-        new ErrorResponse("email already exist, use another email", 400, [ "Error" 
-          ,
+        new ErrorResponse("email already exist, use another email", 400, [
+          "Error",
         ])
       );
     }
 
-    const isSuperadmin = await User.findOne({
-      email: email.toLowerCase(),
-      userType: UserType.SUPERADMIN,
-    });
-
-    if (isSuperadmin) {
-      return next(
-        new ErrorResponse("Error", 400, ["forbidden!, user already exist"])
-      );
-    }
     const passwordCheck = await userService.checkPassword(password);
     if (!passwordCheck) {
       return next(
@@ -103,7 +98,7 @@ export const registerUser = asyncHandler(
           otpType: VerifyOTP.REGISTER,
           salute: `${user.firstName}`,
           bodyOne:
-            "Verify your troott account using the One-Time Password code below",
+            "Verify your account using the One-Time Password code below",
         },
       });
 
@@ -123,6 +118,7 @@ export const registerUser = asyncHandler(
     });
   }
 );
+
 
 // activate user using OTP
 /**
@@ -393,10 +389,7 @@ export const forgotPassword = asyncHandler(
       );
     }
 
-    const OTP = await userService.generateOTPCode(
-      user,
-      OtpType.FORGOTPASSWORD
-    );
+    const OTP = await userService.generateOTPCode(user, OtpType.FORGOTPASSWORD);
 
     if (OTP) {
       const sendOTP = await otpService.sendOTPEmail({
@@ -464,7 +457,10 @@ export const resetPassword = asyncHandler(
 
     await userService.encryptUserPassword(user, newPassword);
 
-    const sendEmail = await emailService.sendPasswordResetNotificationEmail(user, email);
+    const sendEmail = await emailService.sendPasswordResetNotificationEmail(
+      user,
+      email
+    );
     if (sendEmail.error) {
       return next(
         new ErrorResponse("Error", sendEmail.code, [sendEmail.message])
@@ -526,7 +522,9 @@ export const changePassword = asyncHandler(
 
     await userService.encryptUserPassword(user, newPassword);
 
-    const sendEmail = await emailService.sendPasswordChangeNotificationEmail(user.email);
+    const sendEmail = await emailService.sendPasswordChangeNotificationEmail(
+      user.email
+    );
     if (sendEmail.error) {
       return next(
         new ErrorResponse("Error", sendEmail.code, [sendEmail.message])
@@ -612,7 +610,7 @@ export const resendOTP = asyncHandler(
           otpType: VerifyOTP.REGISTER,
           salute: `${user.firstName}`,
           bodyOne:
-            "Verify your troott account using the One-Time Password code below",
+            "Verify your account using the One-Time Password code below",
         },
       });
 
@@ -631,6 +629,42 @@ export const resendOTP = asyncHandler(
     });
   }
 );
+
+
+//get user profile
+
+/**
+ * @name getUserProfile
+ * @description Retrieves the profile of the authenticated user
+ * @route GET /auth/user/me
+ * @access Private 
+ */
+export const getUserProfile = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = (req as any).user.id as IUserDoc;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(new ErrorResponse("Error", 404, ["User not found"]));
+    }
+
+    res.status(200).json({
+      error: false,
+      errors: [],
+      data: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userType: user.userType,
+        isActive: user.isActive,
+      },
+      message: "User profile retrieved successfully",
+      status: 200,
+    });
+  }
+);
+
 
 
 

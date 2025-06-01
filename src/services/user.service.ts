@@ -26,6 +26,7 @@ import { detectPlatform } from "../utils/helper.util";
 import { IPermissionDTO } from "../dtos/system.dto";
 import ErrorResponse from "../utils/error.util";
 import PermissionService from "./permission.service";
+import prepPilotService from "./prepPilot.service";
 
 class UserService {
   public result: IResult;
@@ -45,7 +46,8 @@ class UserService {
   public async validateRegister(data: RegisterUserDTO): Promise<IResult> {
     const allowedUsers = [
       UserType.ADMIN,
-      UserType.USER
+      UserType.USER,
+      UserType.PREPPILOT,
     ];
 
     let result: IResult = { error: false, message: "", code: 200, data: {} };
@@ -186,6 +188,21 @@ class UserService {
 
       user = permissionUpdate.data as IUserDoc;
     }
+
+    
+    if (user.userType === UserType.PREPPILOT) {
+
+      const createUser = await prepPilotService.createPrepPilotProfile({
+        user: user,
+      })
+
+      if (createUser.error) {
+        throw new Error(createUser.message);
+      }
+
+      user 
+    }
+    
 
     await this.encryptUserPassword(user, password);
     await user.save();

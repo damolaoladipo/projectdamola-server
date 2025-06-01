@@ -1,5 +1,12 @@
 import { Document, ObjectId } from "mongoose";
-import { AppChannel, EmailType, OtpType, PasswordType, TransactionsType, UserType } from "./enums.util";
+import {
+  AppChannel,
+  EmailType,
+  OtpType,
+  PasswordType,
+  TransactionsType,
+  UserType,
+} from "./enums.util";
 
 export type Nullable<T> = T | null;
 export interface IRoleDoc extends Document {
@@ -17,7 +24,7 @@ export interface IRoleDoc extends Document {
   createdAt: string;
   updatedAt: string;
   _version: number;
-  _id: ObjectId; 
+  _id: ObjectId;
   id: ObjectId;
 }
 
@@ -38,15 +45,8 @@ export interface IUserDoc extends Document {
   lastName: string;
   email: string;
   password: string;
-  passwordType: PasswordType; // encrypt this data
+  passwordType: PasswordType;
   userType: UserType;
-
-  //user: string;
-  phoneNumber: string;
-  phoneCode: string;
-  country: string;
-  countryPhone: string;
-
   avatar: string;
   dateOfBirth: Date;
   gender: string;
@@ -70,15 +70,6 @@ export interface IUserDoc extends Document {
   loginLimit: number;
   isLocked: boolean;
   lockedUntil: Nullable<Date>;
-  twoFactorEnabled: boolean;
-
-  // Notification Preferences
-  // deviceToken: IDeviceToken;
-  notificationPreferences: {
-    email: boolean;
-    push: boolean;
-    sms: boolean;
-  };
 
   // relationships
   role: ObjectId | any;
@@ -94,7 +85,6 @@ export interface IUserDoc extends Document {
   id: ObjectId;
 }
 
-
 export interface IAdminDoc extends Document {
   firstName: string;
   lastName: string;
@@ -107,15 +97,15 @@ export interface IAdminDoc extends Document {
 export interface ILoginType {
   ip: string;
   deviceType: string;
-  platform: AppChannel
+  platform: AppChannel;
   deviceInfo?: {
-    manufacturer?: string; 
-    model?: string; 
-    osName?: string; 
+    manufacturer?: string;
+    model?: string;
+    osName?: string;
     osVersion: string;
-    browser?: string; 
+    browser?: string;
     browserVersion?: string;
-    appVersion?: string; 
+    appVersion?: string;
   };
   location?: {
     country: string;
@@ -171,7 +161,6 @@ export interface IOptions {
   password: string;
   user: string;
 }
-
 
 export interface ITransactionDoc extends Document {
   type: TransactionsType;
@@ -229,4 +218,62 @@ export interface IEmailRequest {
   type: EmailType;
   template?: string;
   attachments?: any[];
+}
+
+
+// Preppilot related interfaces
+export interface IPrepPilotDoc extends Document {
+  prepPilotUserId: string;
+  jobRole: string;
+  level: string;
+  experience: string;
+  preference: Array<string>;
+  questions: Array<string>;
+
+  // relationships
+  user: ObjectId | any;
+  session: ObjectId | any;
+  createdBy: ObjectId | any;
+
+  // time stamps
+  createdAt: Date;
+  updatedAt: Date;
+  _version: number;
+  _id: ObjectId;
+  id: ObjectId;
+}
+export interface IQuestionDoc extends Document {
+  question: string;
+  answer: string;
+  note: string;
+  isPinned: boolean;
+
+  // relationships
+  preppilotProfile: ObjectId | any;
+  session: ObjectId | any;
+
+  // timestamps
+  createdAt: string;
+  updatedAt: string;
+  _version: number;
+  _id: ObjectId;
+  id: ObjectId;
+}
+
+export interface ISessionDoc extends Document {
+  role: string;
+  experience: string;
+  topicsToFocus: string;
+  description: string;
+
+  // relationships
+  preppilotProfile: ObjectId | any;
+  questions: Array<ObjectId | any>;
+
+  // timestamps
+  createdAt: string;
+  updatedAt: string;
+  _version: number;
+  _id: ObjectId;
+  id: ObjectId;
 }

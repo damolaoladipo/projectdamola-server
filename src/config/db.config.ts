@@ -24,12 +24,12 @@ const connectDB = async () => {
       );
       console.log(
         colors.cyan.bold.underline(
-          `ProjectName Database Connected: ${dbConn.connection.host} `
+          `Playground database connected: ${dbConn.connection.host}`
         )
       );
     } catch (error) {
       console.log(
-        colors.cyan.bold.underline(`Could not connect to ProjectName database: ${error}`)
+        colors.cyan.bold.underline(`Could not connect to PPlayground database: ${error}`)
       );
       process.exit(1);
     }
