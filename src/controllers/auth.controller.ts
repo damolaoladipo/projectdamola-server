@@ -630,5 +630,37 @@ export const resendOTP = asyncHandler(
   }
 );
 
+
+//get user profile
+export const getUserProfile = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    const userId = (req as any).user.id as IUserDoc;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return next(new ErrorResponse("Error", 404, ["User not found"]));
+    }
+
+    res.status(200).json({
+      error: false,
+      errors: [],
+      data: {
+        id: user.id,
+        email: user.email,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userType: user.userType,
+        isActive: user.isActive,
+      },
+      message: "User profile retrieved successfully",
+      status: 200,
+    });
+  }
+);
+
+
+
+
+
 // Sign in with Google
 // Sign in with Apple

@@ -22,7 +22,16 @@ class PreppilotService {
       data: {},
     };
 
-    const {prepPilotUserId,jobRole, level, experience, preference,questions,session, user } = data;
+    const {
+      prepPilotUserId,
+      jobRole,
+      level,
+      experience,
+      preference,
+      questions,
+      session,
+      user,
+    } = data;
 
     // Validate required fields
     if (!user || !user._id) {
@@ -35,34 +44,47 @@ class PreppilotService {
     }
 
     // Profile already exists for the user
-    const existingProfile = await prepPilotRepository.findProfileById(user._id);
+    const existingProfile = await prepPilotRepository.findProfileById({
+      user: user._id,
+    });
     if (existingProfile.error) {
-        return new ErrorResponse(existingProfile.message, existingProfile.code!, []);
-
+      return new ErrorResponse(
+        existingProfile.message,
+        existingProfile.code!,
+        []
+      );
+    }
     // Create the PrepPilot profile
     const prepPilotProfile: IPrepPilotDoc = {
-        prepPilotUserId: prepPilotUserId || "",
-        jobRole: jobRole || "",
-        level: level || "",
-        experience: experience || "",
-        preference: preference || [],
-        user: user._id,
-        session: session || null,
-        questions: questions || [],
-        createdBy: user._id,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        _version: 1,
-        _id: new ObjectId(),
-        };
-
-    return {
-      error: false,
-      message: "",
-      code: 200,
-      data: data,
+      prepPilotUserId: prepPilotUserId || "",
+      jobRole: jobRole || "",
+      level: level || "",
+      experience: experience || "",
+      preference: preference || [],
+      user: user._id,
+      session: session || null,
+      questions: questions || [],
+      createdBy: user._id,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      _version: 1,
+      _id: new ObjectId(),
     };
+
+    const createdProfile = await prepPilotRepository.createProfile(
+      prepPilotProfile
+    );
+
+    if (createdProfile.error) {
+      return new ErrorResponse(
+        createdProfile.message,
+        createdProfile.code!,
+        []
+      );
+    }
   }
+
+  
 }
 
 export const preppilotService = new PreppilotService();
