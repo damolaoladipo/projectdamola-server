@@ -3,6 +3,7 @@ import {
   activateUserAccount,
   changePassword,
   forgotPassword,
+  getUserProfile,
   loginUser,
   logoutUser,
   refreshToken,
@@ -24,5 +25,6 @@ authRouter.post("/reset-password", resetPassword);
 authRouter.post("/change-password", changePassword);
 authRouter.post("/token", refreshToken);
 authRouter.post("/logout", logoutUser);
+authRouter.get("/user/me", getUserProfile);
 
 export default authRouter;

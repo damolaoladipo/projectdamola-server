@@ -95,7 +95,7 @@ class OTPService {
       let bodyOne =
         options && options.bodyOne
           ? options.bodyOne
-          : `We have received your request to make a security-sensitive changes to your troott account.`;
+          : `We have received your request to make a security-sensitive changes to your account.`;
       let bodyTwo =
         options && options.bodyTwo
           ? options.bodyTwo
@@ -172,7 +172,7 @@ class OTPService {
         result = "Password Reset Code";
         break;
       case VerifyOTP.VERIFY:
-        result = "Verify your troott account";
+        result = "Verify your account";
         break;
       default:
         result = "Verify Account";

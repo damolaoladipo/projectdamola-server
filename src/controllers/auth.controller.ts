@@ -98,7 +98,7 @@ export const registerUser = asyncHandler(
           otpType: VerifyOTP.REGISTER,
           salute: `${user.firstName}`,
           bodyOne:
-            "Verify your troott account using the One-Time Password code below",
+            "Verify your account using the One-Time Password code below",
         },
       });
 
@@ -610,7 +610,7 @@ export const resendOTP = asyncHandler(
           otpType: VerifyOTP.REGISTER,
           salute: `${user.firstName}`,
           bodyOne:
-            "Verify your troott account using the One-Time Password code below",
+            "Verify your account using the One-Time Password code below",
         },
       });
 
@@ -632,6 +632,13 @@ export const resendOTP = asyncHandler(
 
 
 //get user profile
+
+/**
+ * @name getUserProfile
+ * @description Retrieves the profile of the authenticated user
+ * @route GET /auth/user/me
+ * @access Private 
+ */
 export const getUserProfile = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
     const userId = (req as any).user.id as IUserDoc;
