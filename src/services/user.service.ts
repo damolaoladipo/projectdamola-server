@@ -189,6 +189,7 @@ class UserService {
       user = permissionUpdate.data as IUserDoc;
     }
 
+    
     if (user.userType === UserType.PREPPILOT) {
 
       const createUser = await prepPilotService.createPrepPilotProfile({

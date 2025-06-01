@@ -1,3 +1,4 @@
+import { generate } from "@btffamily/pacitude";
 import { CreatePrepPilotDTO } from "../../dtos/prepPilot.dto";
 import prepPilotRepository from "../../repositories/prep-pilot.repository";
 import ErrorResponse from "../../utils/error.util";
@@ -9,8 +10,8 @@ class PreppilotService {
   /**
    * @name createPrepPilotProfile
    * @description Creates a new PrepPilot profile.
-   * @param data
-   * @returns
+   * @param data - createPrepPilotDTO
+   * @returns IResult with created prepPilot and user
    */
   public async createPrepPilotProfile(
     data: CreatePrepPilotDTO
@@ -22,16 +23,7 @@ class PreppilotService {
       data: {},
     };
 
-    const {
-      prepPilotUserId,
-      jobRole,
-      level,
-      experience,
-      preference,
-      questions,
-      session,
-      user,
-    } = data;
+    const { user, createdBy } = data;
 
     // Validate required fields
     if (!user || !user._id) {
@@ -44,47 +36,42 @@ class PreppilotService {
     }
 
     // Profile already exists for the user
-    const existingProfile = await prepPilotRepository.findProfileById({
-      user: user._id,
-    });
-    if (existingProfile.error) {
-      return new ErrorResponse(
-        existingProfile.message,
-        existingProfile.code!,
-        []
-      );
+    const isExit = await prepPilotRepository.findProfileById(user._id);
+    if (isExit.error) {
+      return {
+      error: true,
+      message: isExit.message,
+      code: isExit.code!,
+      data: {},
+    };
     }
     // Create the PrepPilot profile
-    const prepPilotProfile: IPrepPilotDoc = {
-      prepPilotUserId: prepPilotUserId || "",
-      jobRole: jobRole || "",
-      level: level || "",
-      experience: experience || "",
-      preference: preference || [],
-      user: user._id,
-      session: session || null,
-      questions: questions || [],
-      createdBy: user._id,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      _version: 1,
-      _id: new ObjectId(),
+    const generateProfile: CreatePrepPilotDTO = {
+      user: user,
+      createdBy: createdBy || user._id,
     };
 
-    const createdProfile = await prepPilotRepository.createProfile(
-      prepPilotProfile
-    );
+    const createdProfile = await prepPilotRepository.createProfile(generateProfile);
 
     if (createdProfile.error) {
-      return new ErrorResponse(
-        createdProfile.message,
-        createdProfile.code!,
-        []
-      );
+      return {
+      error: true,
+      message: createdProfile.message,
+      code: createdProfile.code!,
+      data: {},
+    };
     }
+    
+
+    result.data = {
+    prepPilot: createdProfile.data!,
+    user,
+  };
+  
+    result.message = "PrepPilot profile created successfully.";
+    return result;
   }
 
-  
 }
 
 export const preppilotService = new PreppilotService();
